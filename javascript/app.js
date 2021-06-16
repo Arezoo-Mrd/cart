@@ -38,11 +38,27 @@ class View {
         });
         productsDOM.innerHTML = result
     }
+
+    getCartButtons() {
+        const buttons = [...document.querySelectorAll('.bag-btn')]
+        buttons.forEach((item) => {
+            let id = item.dataset.id
+            item.addEventListener('click', (event) => {
+                let cartItem = Storage.getProduct(id)
+                cart = [...cart, cartItem]
+                console.log(cart);
+            })
+        })
+    }
 }
 
 class Storage {
     static saveProducts(products) {
         localStorage.setItem('products', JSON.stringify(products))
+    }
+    static getProduct(id) {
+        let products = JSON.parse(localStorage.getItem('products'))
+        return products.find((item) => item.id === id)
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     product.getProduct().then((data) => {
         view.displayProducts(data)
         Storage.saveProducts(data)
+    }).then(() => {
+        view.getCartButtons()
     })
-
 })
