@@ -2,6 +2,8 @@ const productsDOM = document.querySelector(".products-center");
 const cartItems = document.querySelector(".cart-items");
 const cartTotal = document.querySelector(".cart-total");
 const cartContent = document.querySelector(".cart-content");
+const cartOverlay = document.querySelector(".cart-overlay");
+const cartDOM = document.querySelector(".cart");
 let cart = [];
 class Product {
     async getProduct() {
@@ -52,6 +54,7 @@ class View {
                 Storage.saveCart(cart);
                 this.setCartValue(cart)
                 this.addCartItem(cartItem)
+                this.showcart()
 
             });
         });
@@ -64,7 +67,6 @@ class View {
             totalItems += item.amount
             cartTotal.innerText = totalPrice
             cartItems.innerText = totalItems
-            console.log(cartTotal, cartItems);
         })
 
     }
@@ -86,9 +88,11 @@ class View {
                 </div>
         `
         cartContent.appendChild(div)
-        console.log(cartContent);
     }
-
+    showcart() {
+        cartOverlay.classList.add('transparentBcg')
+        cartDOM.classList.add('showCart')
+    }
 }
 
 class Storage {
