@@ -46,7 +46,7 @@ class View {
             item.addEventListener('click', (event) => {
                 let cartItem = {...Storage.getProduct(id), amount: 1 }
                 cart = [...cart, cartItem]
-                console.log(cart);
+                Storage.saveCart(cart)
             })
         })
     }
@@ -59,6 +59,9 @@ class Storage {
     static getProduct(id) {
         let products = JSON.parse(localStorage.getItem('products'))
         return products.find((item) => item.id === id)
+    }
+    static saveCart(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart))
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
