@@ -4,6 +4,8 @@ const cartTotal = document.querySelector(".cart-total");
 const cartContent = document.querySelector(".cart-content");
 const cartOverlay = document.querySelector(".cart-overlay");
 const cartDOM = document.querySelector(".cart");
+const cartBtn = document.querySelector(".cart-btn");
+const closeCartBtn = document.querySelector(".close-cart");
 let cart = [];
 class Product {
     async getProduct() {
@@ -96,11 +98,19 @@ class View {
     initApp() {
         cart = Storage.getCart()
         this.setCartValue(cart)
+        this.populate(cart)
+        cartBtn.addEventListener('click', this.showcart)
+        closeCartBtn.addEventListener('click', this.hideCart)
     }
     populate(cart) {
         cart.forEach((item) => {
             return this.addCartItem(item)
         })
+    }
+    hideCart() {
+        cartOverlay.classList.remove('transparentBcg')
+        cartDOM.classList.remove('showCart')
+
     }
 }
 
