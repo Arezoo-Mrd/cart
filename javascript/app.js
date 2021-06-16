@@ -93,6 +93,15 @@ class View {
         cartOverlay.classList.add('transparentBcg')
         cartDOM.classList.add('showCart')
     }
+    initApp() {
+        cart = Storage.getCart()
+        this.setCartValue(cart)
+    }
+    populate(cart) {
+        cart.forEach((item) => {
+            return this.addCartItem(item)
+        })
+    }
 }
 
 class Storage {
@@ -106,10 +115,15 @@ class Storage {
     static saveCart(cart) {
         localStorage.setItem("cart", JSON.stringify(cart));
     }
+    static getCart() {
+        return localStorage.getItem('cart') ?
+            JSON.parse(localStorage.getItem('cart')) : []
+    }
 }
 document.addEventListener("DOMContentLoaded", () => {
     const view = new View();
     const product = new Product();
+    view.initApp()
     product
         .getProduct()
         .then((data) => {
